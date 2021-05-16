@@ -37,15 +37,13 @@ class SnakeNLadder
         ladder.put(17,69);
     }
 
-
-
     public int rollDice()
     {
         int n = 0;
         Random r = new Random();
-        n=r.nextInt(4-1)+1; // this will choose number between 1-3 even probability distribution
+        n=r.nextInt(3)+1; // this will choose number between 1-3 even probability distribution
         System.out.println("Value of N : "+n);
-        return (n==0?2:n*2); // for even dice values.
+        return (n*2); // for even dice values.
     }
 
     public void startGame(int numTimes)
@@ -57,9 +55,7 @@ class SnakeNLadder
         {
 
             diceValue = rollDice();
-            System.out.println("Dice Value : "+diceValue);
             player1 = calculatePlayerValue(player1,diceValue);
-            System.out.println("Count : "+ count);
             if(isWin(player1)) {
                 System.out.println("First player wins");
                 return;
@@ -72,19 +68,16 @@ class SnakeNLadder
     public int calculatePlayerValue(int player, int diceValue)
     {
         player = player + diceValue;
-
         if(player > WINPOINT)
         {
             player = player - diceValue;
             return player;
         }
-
         if(null!=snake.get(player))
         {
             System.out.println("swallowed by snake");
             player= snake.get(player);
         }
-
         if(null!=ladder.get(player))
         {
             System.out.println("climb up the ladder");
@@ -97,5 +90,4 @@ class SnakeNLadder
     {
         return WINPOINT == player;
     }
-
 }
