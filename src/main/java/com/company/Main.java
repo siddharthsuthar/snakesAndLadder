@@ -56,7 +56,7 @@ class SnakeNLadder
             diceValue = rollDice(); // flag = false for all numbers
             player1 = calculatePlayerValue(player1,diceValue);
             if(isWin(player1)) {
-                System.out.println("First player wins");
+                System.out.println("Player wins");
                 return;
             }
             numTimes--;
