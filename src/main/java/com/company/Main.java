@@ -8,6 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+        System.out.println("Enter number of Turns to play the Game : ");
         Scanner s = new Scanner(System.in);
         int numTimes = s.nextInt();
         SnakeNLadder game = new SnakeNLadder();
@@ -19,7 +20,7 @@ class SnakeNLadder
 {
 
     final static int WINPOINT = 100;
-    static Map<Integer,Integer> snake = new HashMap<Integer,Integer>();
+    static Map<Integer,Integer> snake = new HashMap<Integer,Integer>(); // using a Map to help with searching of snakes and ladder in constant time.
     static Map<Integer,Integer> ladder = new HashMap<Integer,Integer>();
 //    fill the board with snakes and Ladder
     {
@@ -41,29 +42,26 @@ class SnakeNLadder
     {
         int n = 0;
         Random r = new Random();
-        n=r.nextInt(3)+1; // this will choose number between 1-3 even probability distribution
-        System.out.println("Value of N : "+n);
-        return (n*2); // for even dice values.
+        int min = 1 ,  max = 3;         // could use for conditional boolean even , max = even?3:6;
+        n=r.nextInt(max)+min; // this will choose number between 1-3 equal probability distribution
+        return  (n*2);  // (even?n*2:n); for even dice values.
     }
 
     public void startGame(int numTimes)
     {
-        int player1 =0;
-        int diceValue =0;
-        int count = 0;
-        while(count<numTimes)
+        int player1 = 0; // can have a list of players for multiple players. int [] players
+        int diceValue = 0;
+        while(numTimes>0) // automatically play for numTimes
         {
-
-            diceValue = rollDice();
+            diceValue = rollDice(); // flag = false for all numbers
             player1 = calculatePlayerValue(player1,diceValue);
             if(isWin(player1)) {
                 System.out.println("First player wins");
                 return;
             }
-            count++;
+            numTimes--;
         }
     }
-
 
     public int calculatePlayerValue(int player, int diceValue)
     {
@@ -76,11 +74,13 @@ class SnakeNLadder
         if(null!=snake.get(player))
         {
             System.out.println("swallowed by snake");
+            System.out.println("From : " + player + " to " + snake.get(player));
             player= snake.get(player);
         }
         if(null!=ladder.get(player))
         {
             System.out.println("climb up the ladder");
+            System.out.println("From : " + player + " to " + ladder.get(player));
             player= ladder.get(player);
         }
         return player;
